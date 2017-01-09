@@ -39,7 +39,7 @@ static inline uint16_t ring_peek(Ring* ring) {
 }
 
 static inline void ring_throw(Ring* ring) {
-    *ring->read++;
+    ring->read++;
     if (ring->read == ring->end)
 	ring->read = ring->begin;
 }
