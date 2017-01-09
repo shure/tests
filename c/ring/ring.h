@@ -41,6 +41,10 @@ static inline uint16_t ring_read(Ring* ring) {
     return value;
 }
 
+static inline uint16_t ring_peek(Ring* ring) {
+    return *ring->read;
+}
+
 static inline unsigned int ring_size(Ring* ring) {
     if (ring->write >= ring->read)
 	return ring->write - ring->read;
