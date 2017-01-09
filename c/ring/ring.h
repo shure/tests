@@ -34,15 +34,20 @@ static inline void ring_write(Ring* ring, uint16_t value) {
 	ring->write = ring->begin;
 }
 
-static inline uint16_t ring_read(Ring* ring) {
-    uint16_t value = *ring->read++;
-    if (ring->read == ring->end)
-	ring->read = ring->begin;
-    return value;
-}
-
 static inline uint16_t ring_peek(Ring* ring) {
     return *ring->read;
+}
+
+static inline void ring_throw(Ring* ring) {
+    *ring->read++;
+    if (ring->read == ring->end)
+	ring->read = ring->begin;
+}
+
+static inline uint16_t ring_read(Ring* ring) {
+    uint16_t value = ring_peek(ring);
+    ring_throw(ring);
+    return value;
 }
 
 static inline unsigned int ring_size(Ring* ring) {
